@@ -1,7 +1,8 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
-import BookShelf from './BookHelper.js'
+import BookShelf from './BookShelf.js'
+import BookSearch from './BookSearch.js'
 
 class BooksApp extends React.Component {
   state = {
@@ -18,65 +19,26 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              {/*
-                the search page is open. click a button to set showSearchPage state to false
-                the click image is arrow-back.svg referenced by the close-search css class
-              */}
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type="text" placeholder="Search by title or author"/>
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+          <BookSearch />
         ) : (
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                      <BookShelf books={[
-                        {title: 'Percy Jackson the Lightning Thief', author: 'Rick Riordan', id: 'aaa'},
+                    <BookShelf shelf="Reading" books={[
+                        {title: 'Lightning Thief', author: 'Rick Riordan', id: 'aaa'},
                         {title: 'Lost Hero', author: 'Rick Riordan', id: 'aab'},
                         {title: 'Blood of Olympus', author: 'Rick Riordan', id: 'aac'},
                       ]}/>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                      <BookShelf books={[
+                      <BookShelf shelf="Want" books={[
                         {title: 'Breakfast at Tiffanys', author: 'Truman Capote', id: 'baa'},
                         {title: 'In Cold Blood', author: 'Truman Capote', id: 'bab'}
                       ]} />
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <BookShelf books={[
+                    <BookShelf shelf="Read" books={[
                       {title: 'Charlie and the Chocolate Factory', author: 'Roald Dahl', id: 'caa' },
                       {title: 'James and the Giant Peach', author: 'Roald Dahl', id: 'cab' }
                     ]} />
-                  </div>
-                </div>
-              </div>
             </div>
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>

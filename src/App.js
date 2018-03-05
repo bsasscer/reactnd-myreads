@@ -3,9 +3,13 @@ import React from 'react'
 import './App.css'
 import BookShelf from './BookShelf.js'
 import BookSearch from './BookSearch.js'
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
+    // initial books array is empty.
+    // we'll fill this array from an API call
+    books: [],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -13,6 +17,13 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false
+  }
+
+  componentDidMount() {
+    // return an array of books from the provided BooksAPI
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
   }
 
   render() {
@@ -26,19 +37,9 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                    <BookShelf shelf="Reading" books={[
-                        {title: 'Lightning Thief', author: 'Rick Riordan', id: 'aaa'},
-                        {title: 'Lost Hero', author: 'Rick Riordan', id: 'aab'},
-                        {title: 'Blood of Olympus', author: 'Rick Riordan', id: 'aac'},
-                      ]}/>
-                      <BookShelf shelf="Want" books={[
-                        {title: 'Breakfast at Tiffanys', author: 'Truman Capote', id: 'baa'},
-                        {title: 'In Cold Blood', author: 'Truman Capote', id: 'bab'}
-                      ]} />
-                    <BookShelf shelf="Read" books={[
-                      {title: 'Charlie and the Chocolate Factory', author: 'Roald Dahl', id: 'caa' },
-                      {title: 'James and the Giant Peach', author: 'Roald Dahl', id: 'cab' }
-                    ]} />
+                    <BookShelf shelf="Reading" books={this.state.books} />
+                    <BookShelf shelf="Want to Read" books={this.state.books} />
+                    <BookShelf shelf="Read" books={this.state.books} />
             </div>
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>

@@ -8,8 +8,8 @@ class BookShelf extends React.Component {
       // take in a shelf title
       const shelf = this.props.shelf
 
-      // map each book in the array to UI in
-      // the Book component
+      // pass in the title of the shelf from the shelf prop
+      // map each book in the array to UI in the Book component
       return <div className="bookShelf" >
         <h2 className="bookshelf-title">{shelf}</h2>
         <div className="bookshelf-books">

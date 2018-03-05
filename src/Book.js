@@ -2,8 +2,10 @@ import React from 'react'
 
 class Book extends React.Component {
   render () {
+    // take in a single book
     const book = this.props.book
 
+    // return UI for a single book
     return <li key={book.id}>
       <div className="book">
         <div className="book-top">

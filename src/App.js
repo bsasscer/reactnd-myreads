@@ -7,9 +7,24 @@ import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
   state = {
-    // initial books array is empty.
-    // we'll fill this array from an API call
+    // initial books array is empty. we fill it with an API call
     books: [],
+    
+    // the app contains three shelves
+    shelves: [
+      {
+        "id": "currentlyReading",
+        "name": "Currently Reading"
+      },
+      {
+        "id": "wantToRead",
+        "name": "Want to Read"
+      },
+      {
+        "id": "read",
+        "name": "Read"
+      }
+    ],
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -29,17 +44,25 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
+        {/*
+          if showSearchPage is true, show the BookSearch component
+        */}
         {this.state.showSearchPage ? (
           <BookSearch />
         ) : (
+          // if showSearchPage is false, show the main page
           <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                    <BookShelf shelf="Reading" books={this.state.books} />
-                    <BookShelf shelf="Want to Read" books={this.state.books} />
-                    <BookShelf shelf="Read" books={this.state.books} />
+              {/*
+                Map each object in the shelves array to a BookShelf
+                Show all books in all shelves for now. TODO: add filtering
+              */}
+                    {this.state.shelves.map(shelf => (
+                      <BookShelf key={shelf.id} shelf={shelf} books={this.state.books} />
+                    ))}
             </div>
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>

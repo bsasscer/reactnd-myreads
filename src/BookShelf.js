@@ -11,11 +11,11 @@ class BookShelf extends React.Component {
       // pass in the title of the shelf from the shelf prop
       // map each book in the array to UI in the Book component
       return <div className="bookShelf" >
-        <h2 className="bookshelf-title">{shelf}</h2>
+        <h2 className="bookshelf-title">{shelf.name}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             {books.map(book => (
-              <Book book={book}/>
+              <Book book={book} key={book.id}/>
             ))}
           </ol>
         </div>

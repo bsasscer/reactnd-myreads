@@ -1,6 +1,9 @@
 const api = "https://reactnd-books-api.udacity.com"
 
 
+// Uncomment localStorage.clear if backend data is corrupted
+//localStorage.clear()
+
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
 if (!token)

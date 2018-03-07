@@ -1,28 +1,28 @@
-import React from 'react'
+import React from "react";
 // import * as BooksAPI from './BooksAPI'
-import './App.css'
-import BookShelf from './BookShelf.js'
-import BookSearch from './BookSearch.js'
-import * as BooksAPI from './BooksAPI'
+import "./App.css";
+import BookShelf from "./BookShelf.js";
+import BookSearch from "./BookSearch.js";
+import * as BooksAPI from "./BooksAPI";
 
 class BooksApp extends React.Component {
   state = {
     // initial books array is empty. we fill it with an API call
     books: [],
-    
+
     // the app contains three shelves
     shelves: [
       {
-        "id": "currentlyReading",
-        "name": "Currently Reading"
+        id: "currentlyReading",
+        name: "Currently Reading"
       },
       {
-        "id": "wantToRead",
-        "name": "Want to Read"
+        id: "wantToRead",
+        name: "Want to Read"
       },
       {
-        "id": "read",
-        "name": "Read"
+        id: "read",
+        name: "Read"
       }
     ],
     /**
@@ -32,13 +32,14 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false
-  }
+  };
 
   componentDidMount() {
     // return an array of books from the provided BooksAPI
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-    })
+    // pass the new array to setState
+    BooksAPI.getAll().then(books => {
+      this.setState({ books });
+    });
   }
 
   render() {
@@ -58,20 +59,28 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               {/*
                 Map each object in the shelves array to a BookShelf
-                Show all books in all shelves for now. TODO: add filtering
+                Filter books array by target shelf
               */}
-                    {this.state.shelves.map(shelf => (
-                      <BookShelf key={shelf.id} shelf={shelf} books={this.state.books} />
-                    ))}
+              {this.state.shelves.map(shelf => (
+                <BookShelf
+                  key={shelf.id}
+                  shelf={shelf}
+                  books={this.state.books.filter(books => {
+                    return books.shelf === shelf.id;
+                  })}
+                />
+              ))}
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <a onClick={() => this.setState({ showSearchPage: true })}>
+                Add a book
+              </a>
             </div>
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;

@@ -42,6 +42,18 @@ class BooksApp extends React.Component {
     });
   }
 
+  // function by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
+  addBookToShelf = (bookToAdd, shelf) => {
+      this.setState(state => {
+        // return a new array that excludes the selected  book
+        const nextState = state.books.filter(book => book.id !== bookToAdd.id);
+        // append the selected book to the new array and include its target shelf prop
+        return {
+          books: [...nextState, { ...bookToAdd, shelf }]
+        };
+      });
+    };
+
   render() {
     return (
       <div className="app">
@@ -58,8 +70,8 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               {/*
-                Map each object in the shelves array to a BookShelf
-                Filter books array by target shelf
+                Map each object in the shelves array to a BookShelf.
+                Filter the books array by shelf
               */}
               {this.state.shelves.map(shelf => (
                 <BookShelf
@@ -68,6 +80,7 @@ class BooksApp extends React.Component {
                   books={this.state.books.filter(books => {
                     return books.shelf === shelf.id;
                   })}
+                      addBookToShelf={this.addBookToShelf}
                 />
               ))}
             </div>

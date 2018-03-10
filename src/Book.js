@@ -18,9 +18,8 @@ class Book extends React.Component {
   }
 
   render() {
-    // take in the book and shelf objects from BookShelf
+    // take in the book objects from BookShelf
     const book = this.props.book;
-    const shelf = this.props.shelf;
 
     // return UI for a single book
     return (
@@ -36,7 +35,7 @@ class Book extends React.Component {
               }}
             />
             <div className="book-shelf-changer">
-              <select defaultValue={shelf.id} onChange={this.handleChange}>
+              <select defaultValue={book.shelf} onChange={this.handleChange}>
                 <option value="none" disabled>
                   Move to...
                 </option>

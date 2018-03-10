@@ -3,9 +3,8 @@ import Book from "./Book";
 
 class BookShelf extends React.Component {
   render() {
-    // take in an array of books
+    // take in the book and shelf objects from App
     const books = this.props.books;
-    // take in a shelf title
     const shelf = this.props.shelf;
 
 
@@ -18,12 +17,13 @@ class BookShelf extends React.Component {
           <ol className="books-grid">
             {books.map(book => (
               <Book
-                // Pass the book and shelf objects to teh child Book component
+                // Pass the book and shelf objects to the child Book component
                 book={book}
-                shelf={shelf}
-                // Provide a unique key for this list item
+                // Required unique key for this list item
                 key={book.id}
-                // Pass addBookToShelfFunction to child Book component
+                // The addBookToShelfFunction exists in the parent App class.
+                // It is passed from App - > Shelf -> Book,
+                // then called when a book is moved to a new shelf.
                 addBookToShelf={this.props.addBookToShelf}
               />
             ))}

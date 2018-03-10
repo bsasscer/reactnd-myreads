@@ -25,13 +25,6 @@ class BooksApp extends React.Component {
         name: "Read"
       }
     ]
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    //showSearchPage: false
   };
 
   componentDidMount() {
@@ -57,16 +50,13 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {/*
-          Use ReactRouter to display UI based on URL
-          /       = main page
-          /search = search page
-        */}
+        {/* Use React Router to display the BookSearch component */}
         <Route path="/search" component={BookSearch} />
+        {/* Use React Router to display the Main page */}
         <Route
+          exact
           path="/"
           render={() => (
-            // if showSearchPage is false, show the main page
             <div className="list-books">
               <div className="list-books-title">
                 <h1>MyReads</h1>

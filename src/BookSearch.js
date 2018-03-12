@@ -1,7 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import * as BooksAPI from "./BooksAPI";
+import { Book } from "./Book";
 
 class BookSearch extends React.Component {
+  state = {
+    // TODO: replace with dynamic search.
+    books: [],
+    query: ""
+  };
+
+  componentDidMount() {
+    // return an array of books from the provided BooksAPI
+    // pass the new array to setState
+    // BooksAPI.search("ios").then(books => {
+    //   this.setState({ books });
+    //   console.log(this.state.books)
+    // });
+  }
+
+
+  handleSearch(e) {
+    // if search parameters are present, execute the API search
+    if (e.target.value !== "") {
+      this.setState({query: e.target.value} )
+      BooksAPI.search(this.state.query).then(books => {
+        this.setState({ books });
+        // console.log(this.state.books);
+      });
+    }
+    // if the search box is empty, empty the result set
+    else {this.setState({ books: []})}
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -23,11 +54,34 @@ class BookSearch extends React.Component {
         However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
         you don't find a specific author or title. Every search is limited by search terms.
       */}
-            <input type="text" placeholder="Search by title or author" />
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              onChange={this.handleSearch.bind(this)}
+            />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            {/* <Book /> component goes */}
+            {this.state.books.map(book => (
+              <li key={book.id}>
+                <div className="book">
+                  <div className="book-top">
+                    <div
+                      className="book-cover"
+                      style={{
+                        width: 128,
+                        height: 193,
+                        backgroundImage: `url(${book.imageLinks.thumbnail})`
+                      }}
+                    />
+                  </div>
+                  <div className="book-title">{book.title}</div>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     );

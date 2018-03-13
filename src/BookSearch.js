@@ -31,18 +31,6 @@ class BookSearch extends React.Component {
     }
   }
 
-  // function by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
-  addBookToShelf = (bookToAdd, shelf) => {
-    this.setState(state => {
-      // return a new array that excludes the selected  book
-      const nextState = state.books.filter(book => book.id !== bookToAdd.id);
-      // append the selected book to the new array and include its target shelf prop
-      return {
-        books: [...nextState, { ...bookToAdd, shelf }]
-      };
-    });
-  };
-
   render() {
     return (
       <div className="search-books">
@@ -79,7 +67,7 @@ class BookSearch extends React.Component {
                 shelf={shelf}
                 key={shelf.id}
                 books={this.state.books}
-                addBookToShelf={this.addBookToShelf}
+                addBookToShelf={this.props.addBookToShelf}
               />
             ))}
           </ol>

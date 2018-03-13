@@ -52,7 +52,11 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {/* Use React Router to display the BookSearch component */}
-        <Route path="/search" component={BookSearch} />
+        <Route path='/search' render={ () => (
+                  <BookSearch
+
+                    addBookToShelf={this.addBookToShelf}/>
+                  )}/>
         {/* Use React Router to display the Main page */}
         <Route
           exact

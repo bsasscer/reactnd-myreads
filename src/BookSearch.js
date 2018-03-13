@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
-import { Book } from "./Book";
+import Book from "./Book";
 
 class BookSearch extends React.Component {
   state = {
@@ -10,22 +10,13 @@ class BookSearch extends React.Component {
     query: ""
   };
 
-  componentDidMount() {
-    // return an array of books from the provided BooksAPI
-    // pass the new array to setState
-    // BooksAPI.search("ios").then(books => {
-    //   this.setState({ books });
-    //   console.log(this.state.books)
-    // });
-  }
-
-
   handleSearch(e) {
     // if search parameters are present, execute the API search
     if (e.target.value !== "") {
       this.setState({query: e.target.value} )
       BooksAPI.search(this.state.query).then(books => {
         this.setState({ books });
+        console.log(this.state.books)
         // console.log(this.state.books);
       });
     }
@@ -63,24 +54,12 @@ class BookSearch extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {/* <Book /> component goes */}
+
+            {/* map search results to Book component */}
             {this.state.books.map(book => (
-              <li key={book.id}>
-                <div className="book">
-                  <div className="book-top">
-                    <div
-                      className="book-cover"
-                      style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url(${book.imageLinks.thumbnail})`
-                      }}
-                    />
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                </div>
-              </li>
+              <Book book={book} key={book.id} />
             ))}
+
           </ol>
         </div>
       </div>

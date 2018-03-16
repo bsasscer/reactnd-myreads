@@ -5,23 +5,35 @@ class Book extends React.Component {
   constructor(props) {
     super(props);
 
-    // register a change handler for the select menu
+    // Register a change handler for the select menu
     this.handleChange = this.handleChange.bind(this);
   }
 
   // the selected shelf is passed to setState when the select menu changes
   handleChange(event) {
-    // update UI with book's new shelf
-    this.props.addBookToShelf(this.props.book, event.target.value);
-    // update back-end data with new shelf membership
+    // Update UI with book's new shelf
+    this.props.changeShelf(this.props.book, event.target.value);
+    // Update back-end data with book's new shelf
     BooksAPI.update(this.props.book, event.target.value);
   }
 
+  mapShelf(foundBook) {
+    const defaultShelf = "none";
+    if (foundBook.shelf === undefined) {
+      //Filter shelvedBooks by foundBook.id
+      //If there is a match, return shelvedBook.shelf
+      //If no match, return defaultShelf
+    } else {
+      return foundBook.shelf;
+    }
+    console.log(foundBook.shelf);
+  }
+
   render() {
-    // take in the book objects from BookShelf
+    // Take in a book object
     const book = this.props.book;
 
-    // return UI for a single book
+    // Return UI for a single book
     return (
       <li>
         <div className="book">
@@ -35,7 +47,10 @@ class Book extends React.Component {
               }}
             />
             <div className="book-shelf-changer">
-              <select defaultValue={book.shelf} onChange={this.handleChange}>
+              <select
+                defaultValue={this.mapShelf(book)}
+                onChange={this.handleChange}
+              >
                 <option value="none" disabled>
                   Move to...
                 </option>

@@ -7,10 +7,10 @@ import { Link, Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
-    // initial books array is empty. we fill it with an API call
+    // Books array starts empty. We fill it with an API call.
     books: [],
 
-    // the app contains three shelves
+    // Object simulating app shelving
     shelves: [
       {
         id: "currentlyReading",
@@ -23,41 +23,48 @@ class BooksApp extends React.Component {
       {
         id: "read",
         name: "Read"
+      },
+      {
+        id: "none",
+        name: "None"
       }
     ]
   };
 
   componentDidMount() {
-    // return an array of books from the provided BooksAPI
-    // pass the new array to setState
+    // Return an array of books from the provided BooksAPI.
+    // Pass the new array to setState
     BooksAPI.getAll().then(books => {
       this.setState({ books });
     });
   }
 
-  // function by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
-  addBookToShelf = (bookToAdd, shelf) => {
+  // Function by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
+  changeShelf = (bookToAdd, shelf) => {
     this.setState(state => {
-      // return a new array that excludes the selected  book
+      // Return a new array that excludes the selected  book
       const nextState = state.books.filter(book => book.id !== bookToAdd.id);
-      // append the selected book to the new array and include its target shelf prop
+      // Append the book/shelf pair to the array.
       return {
         books: [...nextState, { ...bookToAdd, shelf }]
       };
     });
   };
 
-
   render() {
     return (
       <div className="app">
-        {/* Use React Router to display the BookSearch component */}
-        <Route path='/search' render={ () => (
-                  <BookSearch
-
-                    addBookToShelf={this.addBookToShelf}/>
-                  )}/>
-        {/* Use React Router to display the Main page */}
+        {/*
+           React Router displays BookSearch when URL changes to /search.
+          Pass changeShelf() as prop to enable changes in search results.
+            */}
+        <Route
+          path="/search"
+          render={() => <BookSearch changeShelf={this.changeShelf} />}
+        />
+        {/*
+          React Router displays the Main page when URL exacty matches "/"
+           */}
         <Route
           exact
           path="/"
@@ -68,8 +75,8 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 {/*
-                Map each object in the shelves array to a BookShelf.
-                Filter the books array by shelf
+                Map each shelf object in shelves[] to a BookShelf component.
+                Filter books so they only appear on their assigned shelf.
               */}
                 {this.state.shelves.map(shelf => (
                   <BookShelf
@@ -78,7 +85,7 @@ class BooksApp extends React.Component {
                     books={this.state.books.filter(books => {
                       return books.shelf === shelf.id;
                     })}
-                    addBookToShelf={this.addBookToShelf}
+                    changeShelf={this.changeShelf}
                   />
                 ))}
               </div>

@@ -1,33 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
-import BookShelf from "./BookShelf";
+import Book from "./Book";
 
 class BookSearch extends React.Component {
   state = {
-    // TODO: replace with dynamic search.
-    books: [],
-    query: "",
-    shelf: [
-      {
-        id: "results",
-        name: "Search results"
-      }
-    ]
+    foundBooks: [],
+    query: ""
   };
 
   handleSearch(e) {
-    // if search parameters are present, execute the API search
+    // If search parameters are present, execute the API search.
     if (e.target.value !== "") {
       this.setState({ query: e.target.value });
-      BooksAPI.search(this.state.query).then(books => {
-        this.setState({ books });
-        console.log(this.state.books);
-        // console.log(this.state.books);
+      BooksAPI.search(this.state.query).then(foundBooks => {
+        this.setState({ foundBooks });
+        console.log(this.state.foundBooks);
       });
     } else {
-      // if the search box is empty, empty the result set
-      this.setState({ books: [] });
+      // If the search box is empty, empty the result set.
+      this.setState({ foundBooks: [] });
     }
   }
 
@@ -61,13 +53,12 @@ class BookSearch extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {/* map search results to Book component */}
-            {this.state.shelf.map(shelf => (
-              <BookShelf
-                shelf={shelf}
-                key={shelf.id}
-                books={this.state.books}
-                addBookToShelf={this.props.addBookToShelf}
+            {/* Map search results to the Book component */}
+            {this.state.foundBooks.map(book => (
+              <Book
+                book={book}
+                key={book.id}
+                changeShelf={this.props.changeShelf}
               />
             ))}
           </ol>

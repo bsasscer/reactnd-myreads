@@ -19,19 +19,20 @@ class Book extends React.Component {
 
   mapShelf(foundBook) {
     const defaultShelf = "none";
-    if (foundBook.shelf === undefined) {
-      //Filter shelvedBooks by foundBook.id
-      //If there is a match, return shelvedBook.shelf
-      //If no match, return defaultShelf
-    } else {
-      return foundBook.shelf;
+    if (foundBook.shelf !== undefined) {
+      const match = this.props.shelvedBooks.filter(shelvedBooks => {
+        return match.shelf;
+      });
     }
-    console.log(foundBook.shelf);
+    else {
+      return defaultShelf;
+    }
   }
 
   render() {
     // Take in a book object
     const book = this.props.book;
+    const shelvedBooks = this.props.shelvedBooks;
 
     // Return UI for a single book
     return (

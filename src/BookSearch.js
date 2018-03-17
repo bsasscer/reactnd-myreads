@@ -15,7 +15,6 @@ class BookSearch extends React.Component {
       this.setState({ query: e.target.value });
       BooksAPI.search(this.state.query).then(foundBooks => {
         this.setState({ foundBooks });
-        console.log(this.state.foundBooks);
       });
     } else {
       // If the search box is empty, empty the result set.
@@ -24,6 +23,7 @@ class BookSearch extends React.Component {
   }
 
   render() {
+    const shelvedBooks = this.props.shelvedBooks
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -51,6 +51,8 @@ class BookSearch extends React.Component {
             />
           </div>
         </div>
+        {/* Only show search results when there is data to display */}
+        {this.state.foundBooks !== undefined &&
         <div className="search-books-results">
           <ol className="books-grid">
             {/* Map search results to the Book component */}
@@ -59,10 +61,12 @@ class BookSearch extends React.Component {
                 book={book}
                 key={book.id}
                 changeShelf={this.props.changeShelf}
+                shelvedBooks={shelvedBooks}
               />
             ))}
           </ol>
         </div>
+      }
       </div>
     );
   }

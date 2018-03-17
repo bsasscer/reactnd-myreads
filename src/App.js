@@ -7,8 +7,8 @@ import { Link, Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
-    // Books array starts empty. We fill it with an API call.
-    books: [],
+    // shelvedBooks array starts empty. We fill it with an API call.
+    shelvedBooks: [],
 
     // Object simulating app shelving
     shelves: [
@@ -34,8 +34,8 @@ class BooksApp extends React.Component {
   componentDidMount() {
     // Return an array of books from the provided BooksAPI.
     // Pass the new array to setState
-    BooksAPI.getAll().then(books => {
-      this.setState({ books });
+    BooksAPI.getAll().then(shelvedBooks => {
+      this.setState({ shelvedBooks });
     });
   }
 
@@ -43,10 +43,12 @@ class BooksApp extends React.Component {
   changeShelf = (bookToAdd, shelf) => {
     this.setState(state => {
       // Return a new array that excludes the selected  book
-      const nextState = state.books.filter(book => book.id !== bookToAdd.id);
+      const nextState = state.shelvedBooks.filter(
+        book => book.id !== bookToAdd.id
+      );
       // Append the book/shelf pair to the array.
       return {
-        books: [...nextState, { ...bookToAdd, shelf }]
+        shelvedBooks: [...nextState, { ...bookToAdd, shelf }]
       };
     });
   };
@@ -55,15 +57,21 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {/*
-           React Router displays BookSearch when URL changes to /search.
-          Pass changeShelf() as prop to enable changes in search results.
+          Displays BookSearch component when URL changes to /search.
+          Pass shelvedBooks as a prop to compare shelves to results.
+          Pass changeShelf() as prop to enable shelf changes in results.
             */}
         <Route
           path="/search"
-          render={() => <BookSearch changeShelf={this.changeShelf} />}
+          render={() => (
+            <BookSearch
+              shelvedBooks={this.state.shelvedBooks}
+              changeShelf={this.changeShelf}
+            />
+          )}
         />
         {/*
-          React Router displays the Main page when URL exacty matches "/"
+          Display the Main page when URL exacty matches "/"
            */}
         <Route
           exact
@@ -82,8 +90,8 @@ class BooksApp extends React.Component {
                   <BookShelf
                     key={shelf.id}
                     shelf={shelf}
-                    books={this.state.books.filter(books => {
-                      return books.shelf === shelf.id;
+                    books={this.state.shelvedBooks.filter(shelvedBooks => {
+                      return shelvedBooks.shelf === shelf.id;
                     })}
                     changeShelf={this.changeShelf}
                   />

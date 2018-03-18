@@ -23,10 +23,6 @@ class BooksApp extends React.Component {
       {
         id: "read",
         name: "Read"
-      },
-      {
-        id: "none",
-        name: "None"
       }
     ]
   };

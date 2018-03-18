@@ -22,27 +22,22 @@ class Book extends React.Component {
     // On the home screen shelf will never be undefined.
     // Set the default shelf from JSON response
     if (foundBook.shelf) {
-      console.log(foundBook.shelf)
-      return foundBook.shelf
-    }
-    else {
+      return foundBook.shelf;
+    } else {
       // Search results may contain books without a shelf.
-      const match = this.props.shelvedBooks.filter( book => book.id === foundBook.id)
+      const match = this.props.shelvedBooks.filter(
+        book => book.id === foundBook.id
+      );
       if (!Array.isArray(match) || !match.length) {
         // If the match array isn't truthy, the book isn't shelved.
         // Default shelf will be "none"
-        console.log(defaultShelf)
-        return defaultShelf
-      }
-      else {
+        return defaultShelf;
+      } else {
         // If the match array is truthy, return the shelf of the single item array.
-        match.forEach(function(element) {
-          console.log(element.shelf);
-          return element.shelf
-});
+        return match[0].shelf;
+      }
     }
   }
-}
 
   render() {
     // Take in a book object

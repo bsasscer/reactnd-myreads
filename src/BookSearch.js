@@ -23,7 +23,7 @@ class BookSearch extends React.Component {
   }
 
   render() {
-    const shelvedBooks = this.props.shelvedBooks
+    const shelvedBooks = this.props.shelvedBooks;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -52,21 +52,21 @@ class BookSearch extends React.Component {
           </div>
         </div>
         {/* Only show search results when there is data to display */}
-        {this.state.foundBooks !== undefined &&
-        <div className="search-books-results">
-          <ol className="books-grid">
-            {/* Map search results to the Book component */}
-            {this.state.foundBooks.map(book => (
-              <Book
-                book={book}
-                key={book.id}
-                changeShelf={this.props.changeShelf}
-                shelvedBooks={shelvedBooks}
-              />
-            ))}
-          </ol>
-        </div>
-      }
+        {this.state.foundBooks !== undefined && (
+          <div className="search-books-results">
+            <ol className="books-grid">
+              {/* Map search results to the Book component */}
+              {this.state.foundBooks.map(book => (
+                <Book
+                  book={book}
+                  key={book.id}
+                  changeShelf={this.props.changeShelf}
+                  shelvedBooks={shelvedBooks}
+                />
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     );
   }

@@ -5,12 +5,15 @@ import Book from "./Book";
 
 class BookSearch extends React.Component {
   state = {
+    //The foundBooks array will hold books returned from the API search
     foundBooks: [],
+    //The query string will hold search parameters entered by the user
     query: ""
   };
 
   handleSearch(e) {
-    // If search parameters are present, execute the API search.
+    // If search parameters are entered, save the query to state,
+    // then execute the API search.
     if (e.target.value !== "") {
       this.setState({ query: e.target.value });
       BooksAPI.search(this.state.query).then(foundBooks => {
@@ -23,7 +26,9 @@ class BookSearch extends React.Component {
   }
 
   render() {
+    // Take in shelvedBooks from App to compare to search results
     const shelvedBooks = this.props.shelvedBooks;
+    // Show UI for search results
     return (
       <div className="search-books">
         <div className="search-books-bar">

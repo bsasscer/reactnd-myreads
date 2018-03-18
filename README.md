@@ -5,7 +5,7 @@ This is completed submission for Udacity's ReactND. Target functionality is spec
 
 ## Getting Started
 
-To get started developing right away:
+To get started right away:
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`

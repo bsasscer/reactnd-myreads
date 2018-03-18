@@ -90,6 +90,7 @@ class BooksApp extends React.Component {
                   <BookShelf
                     key={shelf.id}
                     shelf={shelf}
+                    shelvedBooks={this.state.shelvedBooks}
                     books={this.state.shelvedBooks.filter(shelvedBooks => {
                       return shelvedBooks.shelf === shelf.id;
                     })}

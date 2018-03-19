@@ -35,19 +35,14 @@ class BooksApp extends React.Component {
     });
   }
 
-  // Function by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
+  // Function inspired by @marcus https://udacity-react.slack.com/team/U9L3DB8CD
+  // Simplified by Udacity reviewer.
   changeShelf = (bookToAdd, shelf) => {
     this.setState(state => {
-      // Return a new array that excludes the selected  book
-      const nextState = state.shelvedBooks.filter(
-        book => book.id !== bookToAdd.id
-      );
-      // Append the book/shelf pair to the array.
-      return {
-        shelvedBooks: [...nextState, { ...bookToAdd, shelf }]
-      };
-    });
-  };
+          const nextState = state.shelvedBooks.filter(book => book.id !== bookToAdd.id).concat( [{...bookToAdd, shelf}] );
+          return { shelvedBooks: nextState };
+        });
+      }
 
   render() {
     return (

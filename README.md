@@ -1,6 +1,6 @@
 # MyReads Project
 
-This is completed submission for Udacity's ReactND. Target functionality is specified in the
+This is a completed submission for Udacity's ReactND. Target functionality is specified in the
 [project rubric](https://review.udacity.com/#!/rubrics/918/view).
 
 ## Getting Started

@@ -17,7 +17,10 @@ class BookSearch extends React.Component {
     if (e.target.value !== "") {
       this.setState({ query: e.target.value });
       BooksAPI.search(this.state.query).then(foundBooks => {
-        this.setState({ foundBooks });
+        // Return found books.
+        // If no results are found an error is thrown. Catch the error
+        // then empty the foundBooks array.
+        this.setState({ foundBooks: !foundBooks || foundBooks.error ? [] : foundBooks });
       });
     } else {
       // If the search box is empty, empty the result set.
